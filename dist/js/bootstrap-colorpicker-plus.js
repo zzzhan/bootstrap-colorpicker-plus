@@ -166,12 +166,14 @@
         });
     };
     $.fn.colorpickerembed.constructor = ColorpickerEmbed;
-    var colorpickerplus = $('<div class="colorpickerplus">' +
-      '<div class="colorpickerplus-container">' +
-        '</div></div>');
     //singleton
-    var _container = $('.colorpickerplus-container', colorpickerplus);
-	colorpickerplus.appendTo($('body'));
+	var colorpickerplus = $('.colorpickerplus');
+	if(colorpickerplus.length<=0) {
+      colorpickerplus = $('<div class="colorpickerplus"></div>');
+	  colorpickerplus.appendTo($('body'));
+	  //console.log('append singleton to body');
+	}
+    var _container = $('<div class="colorpickerplus-container"></div>').appendTo(colorpickerplus);
     _container.colorpickerembed();
     var currPicker = null;
     _container.on('select', function(e){
@@ -193,7 +195,7 @@
         _container.data('colorpickerembed').update(picker.getValue());
         currPicker = picker;
         colorpickerplus.show();
-        console.log('show');
+        //console.log('show');
     };
     var hide = function(picker) {
         //colorpickerplus.offset({top:0, left:0});
@@ -235,7 +237,7 @@
         //     this.element.trigger('create');
         // }, this));
     };
-    ColorpickerPlus.version = '1.0.0-beta';
+    ColorpickerPlus.version = '0.1.0';
     ColorpickerPlus.prototype = {
         constructor: ColorpickerPlus,
         destroy: function() {

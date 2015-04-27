@@ -5,7 +5,7 @@
     "zzzhan <chunzhan.he@gmail.com>"
   ],
   "description": "A Twitter Bootstrap component, more user fiendly colorpicker which integrated  the [Bootstrap Colorpicker](https://github.com/mjolnic/bootstrap-colorpicker)",
-  "main": ["dist/js/bootstrap-colorpicker-plus.js","dist/css/bootstrap-colorpicker-plus.css"]
+  "main": ["dist/js/bootstrap-colorpicker-plus.js","dist/css/bootstrap-colorpicker-plus.css"],
   "keywords": [
     "colorpicker",
     "bootstrap"
