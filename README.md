@@ -11,5 +11,3 @@ A Twitter Bootstrap component basically adds a color picker to a field or any ot
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/zzzhan/bootstrap-colorpicker-plus/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/zzzhan/bootstrap-colorpicker-plus/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
