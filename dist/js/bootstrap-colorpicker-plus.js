@@ -33,28 +33,27 @@
 	var ROWS = 8;
 	var CELLS = 10;
     var createColorCell = function(color, cell) {
-        if(!cell)
-            cell = $('<div class="colorcell"></div>');
+        if(!cell) {
+          cell = $('<div class="colorcell"></div>');
+		}
         if(!!color) {
           cell.attr('data-color', color);
           cell.css('background-color', color);
         } else {
           cell.addClass('colorpicker-color');//alpha
         }
-        cell.hover(function(){
-           $(this).toggleClass('selected');
-        });
         return cell;        
     };
     var ColorpickerEmbed = function(element) {
         var container = $(element);
         var customRows = Math.max(Math.ceil(customColors.length/CELLS), 1);
+        var row = null;
         for(var i=0;i<customRows;i++) {
-            var row = null;
-            if(i==customRows-1)
+            if(i===customRows-1) {
                 row = $('<div class="colorpickerplus-custom-colors"></div>');
-            else           
+            } else {
                 row = $('<div class="colorpickerplus-colors-row"></div>');
+			}
             for(var j=0;j<CELLS;j++) {
                 var cInd = i*CELLS+j;
                 var cell = null;
@@ -68,16 +67,16 @@
             }
             row.appendTo(container);
         }
-        for(var i=0;i<ROWS;i++) {
-            var row = null;
-            if(i<ROWS-1)
+        for(i=0;i<ROWS;i++) {
+            row = null;
+            if(i<ROWS-1) {
                 row = $('<div class="colorpickerplus-colors-row"></div>');
-            else
+            } else {
                 row = $('<div class="colorpickerplus-primary-colors"></div>');
-            for(var j=0;j<CELLS;j++) {
-                var c = panelColors[i*CELLS+j];
-                var cell = createColorCell(c);
-                cell.appendTo(row);
+			}
+            for(var jj=0;jj<CELLS;jj++) {
+                var cc = panelColors[i*CELLS+jj];
+                createColorCell(cc).appendTo(row);
             }
             row.appendTo(container);
         }
@@ -142,8 +141,9 @@
             //     e.pageX = e.originalEvent.touches[0].pageX;
             //     e.pageY = e.originalEvent.touches[0].pageY;
             // }
-            if(!$(e.target).is('.colorcell'))
-                e.stopPropagation();
+            if(!$(e.target).is('.colorcell')) {
+              e.stopPropagation();
+			}
             //e.preventDefault();
         }
     };
@@ -176,7 +176,7 @@
     var _container = $('<div class="colorpickerplus-container"></div>').appendTo(colorpickerplus);
     _container.colorpickerembed();
     var currPicker = null;
-    _container.on('select', function(e){
+    _container.on('select', function(){
         if(!!currPicker) {
             // currPicker.setValue(c);
             hide();
@@ -187,7 +187,7 @@
             currPicker.setValue(e.color);
         }
     });
-    var embed = _container.data('colorpickerembed');
+    //var embed = _container.data('colorpickerembed');
     colorpickerplus.on('mousedown mouseup click touchstart', function(e) {
         e.stopPropagation();
     });
@@ -197,7 +197,7 @@
         colorpickerplus.show();
         //console.log('show');
     };
-    var hide = function(picker) {
+    var hide = function() {
         //colorpickerplus.offset({top:0, left:0});
         colorpickerplus.hide();
         currPicker = null;
@@ -266,7 +266,7 @@
         },
         hide: function(e) {
             var p = $(e.target).closest('.colorpicker');
-            if(p.length>0) return;
+            if(p.length>0) {return;}
             hide();
             $(window).off('resize.colorpickerplus', $.proxy(this.reposition, this));
             $(document).off({
@@ -296,7 +296,7 @@
                 // if not defined or empty, return default
                 val = defaultValue;
             }
-            return (typeof val=='string')?val.toUpperCase():val;
+            return (typeof val==='string')?val.toUpperCase():val;
         },
         hasInput: function() {
             return (this.input !== false);

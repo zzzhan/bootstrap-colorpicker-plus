@@ -11,6 +11,37 @@ module.exports = function (grunt) {
 		}
       }
     },
+    jshint: {
+      options: {
+        curly: true,
+        eqeqeq: true,
+        immed: true,
+        latedef: false,
+        newcap: true,
+        noarg: true,
+        sub: true,
+        undef: true,
+        unused: true,
+        boss: true,
+        eqnull: true,
+        browser: true,
+        globals: {
+          $ : true,
+          Modernizr : true,
+          console: true,
+          define: true,
+          module: true,
+          require: true
+        },
+        "-W099": true,
+      },
+      gruntfile: {
+        src: 'Gruntfile.js'
+      },
+      js: {
+        src: 'src/js/<%=pkg.file %>.js'
+      }
+	},
 	cssmin: {
       options: {
         report: 'gzip'
@@ -32,5 +63,5 @@ module.exports = function (grunt) {
     clean: ['dist/css/<%= pkg.file %>.min.css', 'dist/js/<%= pkg.file %>.min.js']
   });
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-  grunt.registerTask('default', ['clean','uglify','cssmin','copy']);
-}
+  grunt.registerTask('default', ['jshint','clean','uglify','cssmin','copy']);
+};

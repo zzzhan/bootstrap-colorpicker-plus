@@ -48,6 +48,6 @@
 .colorpickerplus-container .colorpickerplus-custom-colors .selected {
 	border:1px solid #000;
 }
-.colorpickerplus-container .selected {
+.colorpickerplus-container .colorcell:hover, .colorpickerplus-container .selected {
 	border:1px solid #000;
 }
