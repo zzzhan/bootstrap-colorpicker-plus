@@ -57,11 +57,15 @@
             for(var j=0;j<CELLS;j++) {
                 var cInd = i*CELLS+j;
                 var cell = null;
-                if(cInd<customColors.length) {
-                    var c = customColors[cInd];
-                    cell = createColorCell(c);
+                if(cInd===0) {
+                  cell = createColorCell();
                 } else {
-                    cell = $('<div class="colorcell nohover"></div>');
+                    if(cInd<customColors.length) {
+                        var c = customColors[cInd];
+                        cell = createColorCell(c);
+                    } else {
+                        cell = $('<div class="nonecell"></div>');
+                    }
                 }
                 cell.appendTo(row);
             }
@@ -97,9 +101,10 @@
         custom: function() {
             var color = this.colorInput.val();
             customColors[customColors.length] = color;
-            var cells = $('.colorcell.nohover', this.element);
+            var cells = $('.nonecell', this.element);
             var cell = createColorCell(color, cells.first());
-            cell.removeClass('nohover');
+            cell.removeClass('nonecell');
+            cell.addClass('colorcell');
             storage.setItem("colorpickerplus_custom_colors",customColors.join());
         },
         select: function(e) {
@@ -278,7 +283,11 @@
             });
         },
         setValue: function(val) {
-            this.element.data('cpp-color', val);
+            if(!!val) {
+              this.element.data('cpp-color', val);
+            } else {
+              this.element.removeData('cpp-color');
+            }
             this.element.trigger({
                 type: 'changeColor',
                 color: val
