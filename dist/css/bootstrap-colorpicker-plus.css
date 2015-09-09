@@ -28,11 +28,9 @@
 	width:100%;
 }
 .colorpickerplus-container .colorpickerplus-custom-colors {
-	padding-bottom: 10px;
+	margin-bottom: 10px;
 }
 .colorpickerplus-container .colorpickerplus-primary-colors {
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
 .colorpickerplus-container .colorcell, .colorpickerplus-container .nonecell {
 	width: 16px;

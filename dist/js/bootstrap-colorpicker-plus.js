@@ -21,7 +21,8 @@
 					   "#CC4125","#E06666","#F6B26B","#FFD966","#93C47D","#76A5AF","#6D9EEB","#6FA8DC","#8E7CC3","#C27BA0",
 					   "#DD7E6B","#EA9999","#F9CB9C","#FFE599","#B6D7A8","#A2C4C9","#A4C2F4","#9FC5E8","#B4A7D6","#D5A6BD",
 					   "#E6B8AF","#F4CCCC","#FCE5CD","#FFF2CC","#D9EAD3","#D0E0E3","#C9DAF8","#CFE2F3","#D9D2E9","#EAD1DC",
-					   "#980000","#FF0000","#FF9900","#FFFF00","#00FF00","#00FFFF","#4A86E8","#0000FF","#9900FF","#FF00FF"];
+					   "#980000","#FF0000","#FF9900","#FFFF00","#00FF00","#00FFFF","#4A86E8","#0000FF","#9900FF","#FF00FF",
+					   "#000","#222","#444","#666","#888","#aaa","#ccc","#ddd","#eee","#fff"];
     var storage = window.localStorage;
     var customColors = [];
     if(!!storage) {
@@ -30,7 +31,7 @@
         }
         customColors = storage.getItem("colorpickerplus_custom_colors").split(',');
     }
-	var ROWS = 8;
+	var ROWS = 9;
 	var CELLS = 10;
     var createColorCell = function(color, cell) {
         if(!cell) {
@@ -73,9 +74,12 @@
         }
         for(i=0;i<ROWS;i++) {
             row = null;
-            if(i<ROWS-1) {
+            if(i<ROWS-2) {
                 row = $('<div class="colorpickerplus-colors-row"></div>');
             } else {
+			  if(i===ROWS-2) {
+			    $('<div class="colorpickerplus-custom-colors"></div>').appendTo(container);
+			  }
                 row = $('<div class="colorpickerplus-primary-colors"></div>');
 			}
             for(var jj=0;jj<CELLS;jj++) {
@@ -90,48 +94,53 @@
         container.on('click.colorpickerplus-container', '.colorcell', $.proxy(this.select, this));
         inputGrp.on('click.colorpickerplus-container', 'button', $.proxy(this.custom, this));
         colorInput.on('changeColor.colorpickerplus-container', $.proxy(this.change, this));
-        container.on('mousedown mouseup click touchstart', $.proxy(this.stopPropagation, this));
-        this.element = container;
+        container.on('mouseup.colorpickerplus', $.proxy(this.stopPropagation, this));
         colorInput.colorpicker();
-        this.colorInput = colorInput;
-        colorInput.data('colorpicker').picker.on('click touchstart', $.proxy(this.stopPropagation, this));
+        //colorInput.data('colorpicker').picker.on('click touchstart', $.proxy(this.stopPropagation, this));
+        this.element = element;
+        this.colorInput = colorInput[0];
     };
     ColorpickerEmbed.prototype = {
         constructor: ColorpickerEmbed,
         custom: function() {
-            var color = this.colorInput.val();
+			var $element = $(this.element);
+            var color = $(this.colorInput).val();
             customColors[customColors.length] = color;
-            var cells = $('.nonecell', this.element);
+            var cells = $('.nonecell', $element);
             var cell = createColorCell(color, cells.first());
             cell.removeClass('nonecell');
             cell.addClass('colorcell');
             storage.setItem("colorpickerplus_custom_colors",customColors.join());
         },
         select: function(e) {
+			var $element = $(this.element);
             var c = $(e.target).data('color');
             if(c==null) {
-              this.element.trigger({type:'changeColor',
+              $element.trigger({type:'changeColor',
                 color:c});
             } else {
               this.update(c);
             }
-            this.element.trigger({
+            $element.trigger({
                 type: 'select',
                 color: c
             });
-            this.colorInput.colorpicker('hide');
+            $(this.colorInput).colorpicker('hide');
         },
         change: function(e) {
+			var $element = $(this.element);
             e.stopPropagation();
-            this.element.trigger({type:'changeColor',
+            $element.trigger({type:'changeColor',
                 color:e.color.toHex()});
         },
         update: function(color) {
-            var cells = $('.colorcell', this.element);
+			var $element = $(this.element);
+            var cells = $('.colorcell', $element);
             cells.removeClass('selected');
             if(color!=null) {
-              this.colorInput.val(color);
-              this.colorInput.colorpicker('setValue', color);
+			  var colorInput = $(this.colorInput);
+              colorInput.val(color);
+              colorInput.colorpicker('setValue', color);
             }
             cells.each(function(){
                 var c = $(this).data('color');
@@ -146,7 +155,8 @@
             //     e.pageX = e.originalEvent.touches[0].pageX;
             //     e.pageY = e.originalEvent.touches[0].pageY;
             // }
-            if(!$(e.target).is('.colorcell')) {
+			var target = $(e.target);
+            if(!target.is('.colorcell')) {
               e.stopPropagation();
 			}
             //e.preventDefault();
@@ -193,9 +203,14 @@
         }
     });
     //var embed = _container.data('colorpickerembed');
-    colorpickerplus.on('mousedown mouseup click touchstart', function(e) {
-        e.stopPropagation();
+	/*
+    colorpickerplus.on('mouseup.colorpickerplus', function(e) {
+		var target = $(e.target);
+        if(!target.is('input')) {
+			e.stopPropagation();
+		}
     });
+	*/
     var show = function(picker) {
         _container.data('colorpickerembed').update(picker.getValue());
         currPicker = picker;
@@ -208,49 +223,53 @@
         currPicker = null;
     };
     var reposition = function(picker) {
-        var offset = picker.element.offset();
+	  var $element = $(picker.element);
+        var offset = $element.offset();
         //var mx = offset.left+picker.element.outerHeight();
         //var my = offset.top;
         //console.log(picker.element.outerHeight());
-        offset.top +=picker.element.outerHeight();
+        offset.top +=$element.outerHeight();
         colorpickerplus.css(offset);
     };
     var defaults = {};
     var ColorpickerPlus = function(element, options) {
-        this.element = $(element);
-        this.options = $.extend({}, defaults, this.element.data(), options);        
-        this.input = this.element.is('input') ? this.element : (this.options.input ?
-            this.element.find(this.options.input) : false);
-        if (this.input && (this.input.length === 0)) {
-            this.input = false;
+        var $element = $(element);
+        this.options = $.extend({}, defaults, $element.data(), options);        
+        var input = $element.is('input') ? $element : (this.options.input ?
+            $element.find(this.options.input) : false);
+        if (input && (input.length === 0)) {
+            input = false;
         }
-        if (this.input !== false) {
-            this.element.on({
-                'focus.colorpickerplus': $.proxy(this.show, this)
+        if (input !== false) {
+            $element.on({
+                'focus': $.proxy(this.show, this)
             });
-            // this.element.on({
+			this.input = input[0];
+            // $element.on({
             //     'focusout.colorpickerplus': $.proxy(this.hide, this)
             // });
         }
 
-        if ((this.input === false)) {
-            this.element.on({
-                'click.colorpickerplus': $.proxy(this.show, this)
+        if ((input === false)) {
+            $element.on({
+                'click': $.proxy(this.show, this)
             });
         }
+		this.element = element;
         // $($.proxy(function() {
-        //     this.element.trigger('create');
+        //     $element.trigger('create');
         // }, this));
     };
     ColorpickerPlus.version = '0.1.0';
     ColorpickerPlus.prototype = {
         constructor: ColorpickerPlus,
         destroy: function() {
-            this.element.removeData('colorpickerplus').off('.colorpickerplus');
+			var $element = $(this.element);
+            $element.removeData('colorpickerplus').off('.colorpickerplus');
             if (this.input !== false) {
-                this.input.off('.colorpickerplus');
+                $(this.input).off('.colorpickerplus');
             }
-            this.element.trigger({
+            $element.trigger({
                 type: 'destroy'
             });
         },
@@ -258,48 +277,49 @@
         	reposition(this);
         },
         show: function() {
+			var $element = $(this.element);
             this.reposition();
             $(window).on('resize.colorpickerplus', $.proxy(this.reposition, this));
-            $(window.document).on({
-                'mousedown.colorpickerplus': $.proxy(this.hide, this)
-            });
+            $(window.document.body).on('mouseup.colorpickerplus', $.proxy(this.hide, this));
             show(this);
-            this.element.trigger({
+            $element.trigger({
                 type: 'showPicker',
                 color: this.getValue()
             });
         },
         hide: function(e) {
-            var p = $(e.target).closest('.colorpicker');
-            if(p.length>0) {return;}
+			var $element = $(this.element);
+			var target = $(e.target);
+            var p = target.closest('.colorpicker');
+            if(p.length>0||target.is('input')) {return;}
             hide();
-            $(window).off('resize.colorpickerplus', $.proxy(this.reposition, this));
-            $(document).off({
-                'mousedown.colorpickerplus': $.proxy(this.hide, this)
-            });
-            this.element.trigger({
+            $(window).off('resize.colorpickerplus');
+            $(window.document.body).off('mouseup.colorpickerplus');
+            $element.trigger({
                 type: 'hidePicker',
                 color: this.getValue()
             });
         },
         setValue: function(val) {
+			var $element = $(this.element);
             if(!!val) {
-              this.element.data('cpp-color', val);
+              $element.data('cpp-color', val);
             } else {
-              this.element.removeData('cpp-color');
+              $element.removeData('cpp-color');
             }
-            this.element.trigger({
+            $element.trigger({
                 type: 'changeColor',
                 color: val
             });
         },
         getValue: function(defaultValue) {
+			var $element = $(this.element);
             defaultValue = (defaultValue === undefined) ? '#000000' : defaultValue;
             var val;
             if (this.hasInput()) {
-                val = this.input.val();
+                val = $(this.input).val();
             } else {
-                val = this.element.data('cpp-color');
+                val = $element.data('cpp-color');
             }
             if ((val === undefined) || (val === '') || (val === null)) {
                 // if not defined or empty, return default
