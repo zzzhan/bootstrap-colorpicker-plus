@@ -116,22 +116,20 @@
 			var $element = $(this.element);
             var c = $(e.target).data('color');
             if(c==null) {
-              $element.trigger({type:'changeColor',
-                color:c});
+              $element.trigger('changeColor',[c]);
             } else {
+			  var colorInput = $(this.colorInput);
+              colorInput.val(c);
+              colorInput.colorpicker('setValue', c);
               this.update(c);
             }
-            $element.trigger({
-                type: 'select',
-                color: c
-            });
+            $element.trigger('select',[c]);
             $(this.colorInput).colorpicker('hide');
         },
         change: function(e) {
 			var $element = $(this.element);
             e.stopPropagation();
-            $element.trigger({type:'changeColor',
-                color:e.color.toHex()});
+            $element.trigger('changeColor',[e.color.toHex()]);
         },
         update: function(color) {
 			var $element = $(this.element);
@@ -140,7 +138,6 @@
             if(color!=null) {
 			  var colorInput = $(this.colorInput);
               colorInput.val(color);
-              colorInput.colorpicker('setValue', color);
             }
             cells.each(function(){
                 var c = $(this).data('color');
@@ -269,9 +266,7 @@
             if (this.input !== false) {
                 $(this.input).off('.colorpickerplus');
             }
-            $element.trigger({
-                type: 'destroy'
-            });
+            $element.trigger('destroy');
         },
         reposition: function() {
         	reposition(this);
@@ -282,10 +277,7 @@
             $(window).on('resize.colorpickerplus', $.proxy(this.reposition, this));
             $(window.document.body).on('mouseup.colorpickerplus', $.proxy(this.hide, this));
             show(this);
-            $element.trigger({
-                type: 'showPicker',
-                color: this.getValue()
-            });
+            $element.trigger('showPicker',[this.getValue()]);
         },
         hide: function(e) {
 			var $element = $(this.element);
@@ -295,10 +287,7 @@
             hide();
             $(window).off('resize.colorpickerplus');
             $(window.document.body).off('mouseup.colorpickerplus');
-            $element.trigger({
-                type: 'hidePicker',
-                color: this.getValue()
-            });
+            $element.trigger('hidePicker',[this.getValue()]);
         },
         setValue: function(val) {
 			var $element = $(this.element);
@@ -307,10 +296,7 @@
             } else {
               $element.removeData('cpp-color');
             }
-            $element.trigger({
-                type: 'changeColor',
-                color: val
-            });
+            $element.trigger('changeColor',[val]);
         },
         getValue: function(defaultValue) {
 			var $element = $(this.element);
