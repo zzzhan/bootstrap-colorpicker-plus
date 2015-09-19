@@ -3,15 +3,12 @@
 	display: none;
 	top: 0;
 	left: 0;
-	max-width: 200px;
+	max-width: 185px;
 	max-height: 300px;
 	z-index: 2499;
 }
 .colorpickerplus-dropdown .dropdown-menu {
     width: 185px;
-}
-.colorpickerplus-embed {
-	width: 182px;
 }
 .colorpickerplus-container div {
 	position: relative;
