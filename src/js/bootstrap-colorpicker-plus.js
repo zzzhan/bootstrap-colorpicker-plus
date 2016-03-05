@@ -189,9 +189,9 @@
     _container.colorpickerembed();
     var currPicker = null;
     _container.on('changeColor', function(e, val){
-	  console.log('color:'+val);
+	  //console.log('color:'+val);
         if(!!currPicker) {		  
-	  console.log('color:'+val);
+	  //console.log('color:'+val);
             currPicker.setValue(val);
         }
     });
