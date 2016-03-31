@@ -3,44 +3,22 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
       options: {
-        banner: '/*! <%= pkg.file %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
 		files: {
-			'dist/js/<%= pkg.file %>.min.js':'src/js/<%=pkg.file %>.js'
+			'dist/js/<%= pkg.name %>.min.js':'src/js/<%=pkg.name %>.js'
 		}
       }
     },
     jshint: {
       options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: false,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        unused: true,
-        boss: true,
-        eqnull: true,
-        browser: true,
-        globals: {
-          $ : true,
-          Modernizr : true,
-          console: true,
-          define: true,
-          module: true,
-          require: true
-        },
-        "-W099": true,
+        jshintrc: '.jshintrc'
       },
-      gruntfile: {
-        src: 'Gruntfile.js'
-      },
-      js: {
-        src: 'src/js/<%=pkg.file %>.js'
-      }
+      all: [
+        'Gruntfile.js',
+        'src/js/*.js'
+      ]
 	},
 	cssmin: {
       options: {
@@ -48,19 +26,25 @@ module.exports = function (grunt) {
       },
       build: {
 		files: {		
-			'dist/css/<%= pkg.file %>.min.css':'src/css/<%=pkg.file %>.css'
+			'dist/css/<%= pkg.name %>.min.css':'src/css/<%=pkg.name %>.css'
 		}
       }
 	},
 	copy: {
       build: {
-		files: {		
-			'dist/js/<%= pkg.file %>.js':'src/js/<%=pkg.file %>.js',
-			'dist/css/<%= pkg.file %>.css':'src/css/<%=pkg.file %>.css'
-		}
+        expand: true,
+        cwd: 'src/',
+        src: ['**/*'],
+        dest:'dist/'
+      },
+      mjolnic: {
+        expand: true,
+        cwd: 'bower_components/mjolnic-bootstrap-colorpicker/dist',
+        src: ['**/*'],
+        dest:'dist/'
       }
 	},
-    clean: ['dist/css/<%= pkg.file %>.min.css', 'dist/js/<%= pkg.file %>.min.js']
+    clean: ['dist']
   });
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
   grunt.registerTask('default', ['jshint','clean','uglify','cssmin','copy']);
