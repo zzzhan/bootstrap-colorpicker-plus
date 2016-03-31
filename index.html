@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Colorpickerplus for Twitter Bootstrap</title>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <link href="dist/css/bootstrap-colorpicker-plus.css" rel="stylesheet">
+    <style type="text/css">
+        .color-fill-icon{display:inline-block;width:16px;height:16px;border:1px solid #000;background-color:#fff;margin: 2px;}
+        .dropdown-color-fill-icon{position:relative;float:left;margin-left:0;margin-right: 0}
+		.well .markup{
+			background: #fff;
+			color: #777;
+			position: relative;
+			padding: 45px 15px 15px;
+			margin: 15px 0 0 0;
+			background-color: #fff;
+			border-radius: 0 0 4px 4px;
+			box-shadow: none;
+		}
+
+		.well .markup::after{
+			content: "Example";
+			position: absolute;
+			top: 15px;
+			left: 15px;
+			font-size: 12px;
+			font-weight: bold;
+			color: #bbb;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+    </style>
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<div class="container">
+	  <div class="page-header">
+	    <h1><i class="glyphicon glyphicon-tint"></i> Bootstrap Colorpicker Plus <small>for Twitter Bootstrap</small></h1>
+	  </div>
+	  <div class="row">
+		<article class="col-md-12">
+			<p>
+				A Twitter Bootstrap component, more user fiendly colorpicker which integrated the <a href="https://github.com/mjolnic/bootstrap-colorpicker" target="_blank">Bootstrap Colorpicker</a>
+			<br>
+				<br> It basically adds a color picker to a field or any other element, alse can be embed to the page or dropdown menu.
+			</p>
+			<ul>
+			  <li>common color panel</li>
+			  <li>custom your favor color</li>
+			  <li>the bootstrap-colorpicker integrated</li>
+			</ul>
+			<hr>
+			<div class="social">
+				<a href="https://github.com/zzzhan/bootstrap-colorpicker-plus/" target="_blank" class="btn btn-default btn-md"><i class="glyphicon glyphicon-random"></i> Fork me on Github</a>
+				<a href="https://github.com/zzzhan/bootstrap-colorpicker-plus/archive/master.zip" target="_blank" class="btn btn-success btn-md"><i class="glyphicon glyphicon-download-alt"></i> Download</a>
+
+			</div>
+			<br>
+		</article>
+	  </div>
+      <div class="row">
+		<div class="col-md-12">
+		<h2>Examples</h2>
+		<p>Sample#1</p>
+	  	<div class="well">
+		  <div class="input-group input-group-sm">
+		    <input type="text" value="#fff" id="demo1"/>
+		  </div>
+		  <pre class="markup">
+&lt;input type="text" value="#fff" id="demo1" /&gt;
+&lt;script&gt;
+$(function(){
+  var demo1 = $('#demo1');
+  demo1.colorpickerplus();
+  demo1.on('changeColor', function(e){
+	if(e.color==null)
+	  $(this).val('transparent').css('background-color', '#fff');//tranparent
+	else
+	  $(this).val(e.color).css('background-color', e.color);
+  });
+});
+&lt;/script&gt;
+          </pre>
+	  	</div>
+		<p>Sample#2</p>
+	  	<div class="well">
+		    <div class="btn-group btn-group-sm">
+		      <button type="button" class="btn btn-default" id="demo2"><span class="color-fill-icon dropdown-color-fill-icon" style="background-color:#000;"></span>&nbsp;<b class="caret"></b></button>
+		    </div>
+		  <pre class="markup">
+&lt;button type="button" class="btn btn-default" id="demo2"&gt;...&lt;/button&gt;
+&lt;script&gt;
+$(function(){
+  var demo2 = $('#demo2');
+  demo2.colorpickerplus();
+  demo2.on('changeColor', function(e){
+	if(e.color==null) {
+	  //when select transparent color
+	  $('.color-fill-icon', $(this)).addClass('colorpicker-color');
+	} else {
+	  $('.color-fill-icon', $(this)).removeClass('colorpicker-color');
+	  $('.color-fill-icon', $(this)).css('background-color', e.color);
+	}
+  });
+});
+&lt;/script&gt;
+          </pre>
+		</div>
+		<p>Sample#3</p>
+		<div class="well">
+		  <input type="text" value="" id="demo3"/>
+		  <div class="colorpickerplus-embed">
+		    <div class="colorpickerplus-container"></div>
+		  </div>
+		  <pre class="markup">
+&lt;input type="text" value="#fff" id="demo3" /&gt;
+&lt;div class="colorpickerplus-embed"&gt;
+  &lt;div class="colorpickerplus-container" &lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$(function(){
+  var demo3 = $('.colorpickerplus-embed .colorpickerplus-container');
+  demo3.colorpickerembed();
+  demo3.on('changeColor', function(e){
+	if(e.color==null)
+	  $('#demo3').val('transparent').css('background-color', '#fff');//tranparent
+	else
+	  $('#demo3').val(e.color).css('background-color', e.color);
+  });
+});
+&lt;/script&gt;
+          </pre>
+		</div>
+		<p>Sample#4</p>
+		<div class="well">
+          <div class="btn-group btn-group-sm colorpickerplus-dropdown" id="demo4">
+		    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="color-fill-icon dropdown-color-fill-icon"></span>&nbsp;<b class="caret"></b></button>
+		    <ul class="dropdown-menu">
+		      <li class="disabled"><div class="colorpickerplus-container"></div>
+		      </li>
+			  <li><a href="#">Other</a></li>
+			  <li><a href="#">More...</a></li>
+		    </ul>
+		  </div>
+		  <pre class="markup">
+&lt;div class="btn-group btn-group-sm colorpickerplus-dropdown" id="demo4"&gt;
+&lt;button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"&gt;...&lt;/button&gt;
+&lt;ul class="dropdown-menu"&gt;
+&lt;li class="disabled"&gt;&lt;div class="colorpickerplus-container">&lt;/div&gt;
+&lt;/li&gt;
+&lt;li>...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;script&gt;
+$(function(){
+  var demo4 = $('.colorpickerplus-dropdown .colorpickerplus-container');
+  demo4.colorpickerembed();
+  demo4.on('changeColor', function(e){
+    var el = $('.color-fill-icon', $('#demo4'));
+    if(e.color==null) {
+      //when select transparent color
+      el.addClass('colorpicker-color');
+    } else {
+      el.removeClass('colorpicker-color');
+      el.css('background-color', e.color);
+    }
+  });
+});
+&lt;/script&gt;
+          </pre>
+		</div>
+		</div>
+	  </div>
+	</div>
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="dist/js/bootstrap-colorpicker.min.js"></script>
+    <script src="dist/js/bootstrap-colorpicker-plus.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        var demo1 = $('#demo1');
+        demo1.colorpickerplus();
+        demo1.on('changeColor', function(e,color){
+			if(color==null)
+			$(this).val('transparent').css('background-color', '#fff');//tranparent
+			else
+        	$(this).val(color).css('background-color', color);
+        });
+
+
+        var demo2 = $('#demo2');
+        demo2.colorpickerplus();
+        demo2.on('changeColor', function(e,color){
+			if(color==null) {
+			  //when select transparent color
+			  $('.color-fill-icon', $(this)).addClass('colorpicker-color');
+			} else {
+			  $('.color-fill-icon', $(this)).removeClass('colorpicker-color');
+        	  $('.color-fill-icon', $(this)).css('background-color', color);
+			}
+        });
+		
+		var demo3 = $('.colorpickerplus-embed .colorpickerplus-container');
+        demo3.colorpickerembed();
+        demo3.on('changeColor', function(e,color){
+			if(color==null)
+			$('#demo3').val('transparent').css('background-color', '#fff');//tranparent
+			else
+        	$('#demo3').val(color).css('background-color', color);
+        });
+		var demo4 = $('.colorpickerplus-dropdown .colorpickerplus-container');
+        demo4.colorpickerembed();
+        demo4.on('changeColor', function(e,color){
+			var el = $('.color-fill-icon', $('#demo4'));
+			if(color==null) {
+			  //when select transparent color
+			  el.addClass('colorpicker-color');
+			} else {
+			  el.removeClass('colorpicker-color');
+        	  el.css('background-color', color);
+			}
+        });
+    });
+    </script>
+  </body>
+</html>
