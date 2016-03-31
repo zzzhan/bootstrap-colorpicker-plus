@@ -1,11 +1,3 @@
-/*!
- * Bootstrap Colorpicker Plus
- * https://github.com/zzzhan/bootstrap-colorpicker-plus
- *
- * Licensed under the Apache License v2.0
- * http://www.apache.org/licenses/LICENSE-2.0.txt
- *
- */
 (function(factory){
     "use strict";
     if (typeof define === 'function' && define.amd) {
@@ -15,21 +7,21 @@
     }	
 }(function($){
 	var panelColors = ["#5B0F00","#660000","#783F04","#7F6000","#274E13","#0C343D","#1C4587","#073763","#20124D","#4C1130",
-					   "#5B0F00","#660000","#783F04","#7F6000","#274E13","#0C343D","#1C4587","#073763","#20124D","#4C1130",
-					   "#85200C","#990000","#B45F06","#BF9000","#38761D","#134F5C","#1155CC","#0B5394","#351C75","#741B47",
-					   "#A61C00","#CC0000","#E69138","#F1C232","#6AA84F","#45818E","#3C78D8","#3D85C6","#674EA7","#A64D79",
-					   "#CC4125","#E06666","#F6B26B","#FFD966","#93C47D","#76A5AF","#6D9EEB","#6FA8DC","#8E7CC3","#C27BA0",
-					   "#DD7E6B","#EA9999","#F9CB9C","#FFE599","#B6D7A8","#A2C4C9","#A4C2F4","#9FC5E8","#B4A7D6","#D5A6BD",
-					   "#E6B8AF","#F4CCCC","#FCE5CD","#FFF2CC","#D9EAD3","#D0E0E3","#C9DAF8","#CFE2F3","#D9D2E9","#EAD1DC",
-					   "#980000","#FF0000","#FF9900","#FFFF00","#00FF00","#00FFFF","#4A86E8","#0000FF","#9900FF","#FF00FF",
-					   "#000000","#222222","#444444","#666666","#888888","#AAAAAA","#CCCCCC","#DDDDDD","#EEEEEE","#FFFFFF"];
+		"#5B0F00","#660000","#783F04","#7F6000","#274E13","#0C343D","#1C4587","#073763","#20124D","#4C1130",
+		"#85200C","#990000","#B45F06","#BF9000","#38761D","#134F5C","#1155CC","#0B5394","#351C75","#741B47",
+		"#A61C00","#CC0000","#E69138","#F1C232","#6AA84F","#45818E","#3C78D8","#3D85C6","#674EA7","#A64D79",
+		"#CC4125","#E06666","#F6B26B","#FFD966","#93C47D","#76A5AF","#6D9EEB","#6FA8DC","#8E7CC3","#C27BA0",
+		"#DD7E6B","#EA9999","#F9CB9C","#FFE599","#B6D7A8","#A2C4C9","#A4C2F4","#9FC5E8","#B4A7D6","#D5A6BD",
+		"#E6B8AF","#F4CCCC","#FCE5CD","#FFF2CC","#D9EAD3","#D0E0E3","#C9DAF8","#CFE2F3","#D9D2E9","#EAD1DC",
+		"#980000","#FF0000","#FF9900","#FFFF00","#00FF00","#00FFFF","#4A86E8","#0000FF","#9900FF","#FF00FF",
+		"#000000","#222222","#444444","#666666","#888888","#AAAAAA","#CCCCCC","#DDDDDD","#EEEEEE","#FFFFFF"];
     var storage = window.localStorage;
     var customColors = [];
     if(!!storage) {
         if(!storage.getItem("colorpickerplus_custom_colors")) {
-            storage.setItem("colorpickerplus_custom_colors",customColors.join());
+            storage.setItem("colorpickerplus_custom_colors",customColors.join('$'));
         }
-        customColors = storage.getItem("colorpickerplus_custom_colors").split(',');
+        customColors = storage.getItem("colorpickerplus_custom_colors").split('$');
     }
 	var ROWS = 9;
 	var CELLS = 10;
@@ -110,7 +102,7 @@
             var cell = createColorCell(color, cells.first());
             cell.removeClass('nonecell');
             cell.addClass('colorcell');
-            storage.setItem("colorpickerplus_custom_colors",customColors.join());
+            storage.setItem("colorpickerplus_custom_colors",customColors.join('$'));
         },
         select: function(e) {
 			var $element = $(this.element);
