@@ -1,11 +1,14 @@
 {
   "name": "bootstrap-colorpicker-plus",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "authors": [
     "zzzhan <chunzhan.he@gmail.com>"
   ],
   "description": "A Twitter Bootstrap component, more user fiendly colorpicker which integrated  the [Bootstrap Colorpicker](https://github.com/mjolnic/bootstrap-colorpicker)",
-  "main": ["src/js/bootstrap-colorpicker-plus.js","src/css/bootstrap-colorpicker-plus.css"],
+  "main": [
+    "src/js/bootstrap-colorpicker-plus.js",
+    "src/css/bootstrap-colorpicker-plus.css"
+  ],
   "keywords": [
     "colorpicker",
     "bootstrap"
@@ -18,11 +21,11 @@
     "bower_components",
     "test",
     "tests",
-	"src",
+    "src",
     "Gruntfile.js",
     "package.json"
   ],
   "dependencies": {
-    "mjolnic-bootstrap-colorpicker": "https://github.com/mjolnic/bootstrap-colorpicker.git#~2.1.1"
+    "mjolnic-bootstrap-colorpicker": "~2.3.0"
   }
 }
