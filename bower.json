@@ -6,8 +6,8 @@
   ],
   "description": "A Twitter Bootstrap component, more user fiendly colorpicker which integrated  the [Bootstrap Colorpicker](https://github.com/mjolnic/bootstrap-colorpicker)",
   "main": [
-    "src/js/bootstrap-colorpicker-plus.js",
-    "src/css/bootstrap-colorpicker-plus.css"
+    "dist/js/bootstrap-colorpicker-plus.js",
+    "dist/css/bootstrap-colorpicker-plus.css"
   ],
   "keywords": [
     "colorpicker",
