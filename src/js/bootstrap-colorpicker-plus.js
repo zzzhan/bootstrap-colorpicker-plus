@@ -214,13 +214,20 @@
         currPicker = null;
     };
     var reposition = function(picker) {
-	  var $element = $(picker.element);
-        var offset = $element.offset();
-        //var mx = offset.left+picker.element.outerHeight();
-        //var my = offset.top;
-        //console.log(picker.element.outerHeight());
-        offset.top +=$element.outerHeight();
-        colorpickerplus.css(offset);
+    	var $element = $(picker.element);
+        var elementOffset = $element.offset();
+        var pickerOffset = $element.offset();
+
+        pickerOffset.top += $element.outerHeight();
+        
+        if (pickerOffset.top + colorpickerplus.outerHeight() >= window.innerHeight - 25) {
+            pickerOffset.top = elementOffset.top - colorpickerplus.outerHeight();
+        }
+        if (pickerOffset.left + colorpickerplus.outerWidth() >= window.innerWidth - 25) {
+            pickerOffset.left = elementOffset.left + $element.outerWidth() - colorpickerplus.outerWidth();
+        }
+                
+        colorpickerplus.css(pickerOffset);
     };
     var defaults = {};
     var ColorpickerPlus = function(element, options) {
